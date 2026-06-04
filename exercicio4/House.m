@@ -12,7 +12,7 @@ v = x + alpha.*I(:,1);
 
 % condicional para o caso de o vetor v ser identicamente nulo
 if norm(v) == 0
-    v = x
+    v = x;
 end
 
 % normalizar o vetor v
