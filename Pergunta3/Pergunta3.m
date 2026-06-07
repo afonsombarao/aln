@@ -1,11 +1,13 @@
-%%% LInk da Imagem %%%
+%% Imagem a preto e branco %%
+
+% Link da imagem que vamos utilizar:
 % https://www.reddit.com/r/PixelArtTutorials/comments/1jc8dfj/64x64_pixel_art_from_online_image_not_mine/?tl=pt-br
 
-imagem = imread("charmander_cinzento.jpg");
+imagem = imread("charmander_cinzento.jpg"); 
 
 A = double(imagem);
 
-[U, S, V] = svd(A);
+[U, S, V] = svd(A); % decomposicao svd
 valores_singulares = diag(S);
 total_valores = length(valores_singulares);
 fprintf('%d\n',total_valores);
@@ -13,12 +15,13 @@ fprintf('%d\n',total_valores);
 denominador = sum(valores_singulares.^2);
 percentagens = [1, 10, 25, 50, 75];
 
-%fprintf('O número total de valores singulares obtidos é: %d', total_valores); % alínea (i)
+fprintf('O número total de valores singulares obtidos é: %d', total_valores); % alínea (i)
+
 
 for i = 1:length(percentagens)
     prec = percentagens(i);
 
-    p = round((prec / 100) * length(valores_singulares));
+    p = round((prec / 100) * length(valores_singulares)); %o numero de valores singulares que vao sobrar
 
     U_p = U(:, 1:p);
     S_p = S(1:p, 1:p);
@@ -30,22 +33,24 @@ for i = 1:length(percentagens)
     qualidade_percentagem = sigma*100;
 
     fprintf('Valores retidos: %2d%% (p = %3d) | Qualidade: %9.5f%%\n', prec, p, qualidade_percentagem);
-    
+    % gera um texto a indicar o numero de valores singulares retidos e a
+    % qualidade da imagem final
+
     figure;
-    imshow(uint8(A_simplificada));
+    imshow(uint8(A_simplificada)); % mostra a imagem com a respetiva reducao de valores singulares
 end
 
-%%% O gajo a cores %%%
+%% Imagem a cores %%
 
 imagem_cor = imread("charmander.jpg");
 
 B = double(imagem_cor);
 
-R = B(:, :, 1); 
+R = B(:, :, 1); % da-nos cada uma das diferentes matrizes de cada cor
 G = B(:, :, 2); 
 B = B(:, :, 3);
 
-[U_R, S_R, V_R] = svd(R);
+[U_R, S_R, V_R] = svd(R); % decomposicao svd de cada uma das matrizes
 [U_G, S_G, V_G] = svd(G);
 [U_B, S_B, V_B] = svd(B);
 
@@ -58,18 +63,22 @@ total_valores_G = length(valores_singulares_G);
 total_valores_B = length(valores_singulares_B);
 
 percentagens_R = [1, 10, 25, 50, 75,0,100,100];
-percentagens_G = [1, 10, 25, 50, 75,100,0,100]; %CUidado elas têm de ter as 3 o mesmo tamanho
+percentagens_G = [1, 10, 25, 50, 75,100,0,100]; 
 percentagens_B = [1, 10, 25, 50, 75,100,100,0];
-%percentagens_R = [0.01,100];
-%percentagens_G = [100,100];
-%percentagens_B = [100,100];
+% Separar as percentagem em 3 vetores diferentes danos mais liberdades da   
+% combinacao das diferentes camadas do RGB, foi o que nos permitiu fazer as
+% imagens onde removemos uma das cores
+
+%contudo é importante ter o cuidade que o código só corre se os 3 vetores
+%tiverem o mesmo tamanho
+
 
 
 denominador_R = sum(valores_singulares_R.^2);
 denominador_G = sum(valores_singulares_G.^2);
 denominador_B = sum(valores_singulares_B.^2);
 
-for i=1:length(percentagens_R)
+for i=1:length(percentagens_R) % este codigo e analogo ao da imagem em preto e branco 
     prec_R = percentagens_R(i);
     prec_G = percentagens_G(i);
     prec_B = percentagens_B(i);
@@ -108,7 +117,9 @@ for i=1:length(percentagens_R)
     fprintf('  Canal G: %2d%% valores (p = %3d) | Qualidade: %8.4f%%\n', prec_G, p_G, qualidade_G);
     fprintf('  Canal B: %2d%% valores (p = %3d) | Qualidade: %8.4f%%\n', prec_B, p_B, qualidade_B);
     fprintf('---------------------------------------------------------------\n');
+    % apresenta a informacao sobre a imagem final
     
+
     figure;
-    imshow(uint8(imagem_cor_simplificada));
+    imshow(uint8(imagem_cor_simplificada)); % mostra a imagem final
 end
