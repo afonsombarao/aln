@@ -10,16 +10,16 @@ A = vander([1, 3, 5, 7, 9]); % Gera a matriz de Vandermonde pedida
 epsilons = [0.1, 1e-3, 1e-6, 1e-9, 1e-12, 1e-15]; % O vetor dos \epsilons
 n_max = 2000; % numero maximo de iteracoes que vamos utilizar
 
-valores_iter_1 = zeros(length(epsilons), 1); % formula (12)
-valores_iter_2 = zeros(length(epsilons), 1); % formula (13)
+valores_iter_1 = zeros(length(epsilons), 1); % formula (13)
+valores_iter_2 = zeros(length(epsilons), 1); % formula (14)
 valores_iter_test = zeros(length(epsilons), 1); % valores para a \|X_{k+1}-X_K\|
 valores_iter_test2 = zeros(length(epsilons), 1); % valores para a do \|R_k\|
 
 for k = 1:length(epsilons) 
     epsilon_atual = epsilons(k);
     
-    [~, iter_1, ~] = Newton_Schulz_erro_1_autoX0(A,n_max,epsilon_atual); % formula (12)
-    [~, iter_2, ~] = Newton_Schulz_erro_2_autoX0(A,n_max,epsilon_atual); % formula (13)
+    [~, iter_1, ~] = Newton_Schulz_erro_1_autoX0(A,n_max,epsilon_atual); % formula (13)
+    [~, iter_2, ~] = Newton_Schulz_erro_2_autoX0(A,n_max,epsilon_atual); % formula (14)
     [~, iter_3, ~] = Newton_Schulz_test(A,n_max,epsilon_atual); % valores para a \|X_{k+1}-X_K\|
     [~, iter_4, ~] = Newton_Schulz_test2(A,n_max,epsilon_atual); % valores para a do \|R_k\|
 
