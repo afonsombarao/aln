@@ -1,6 +1,7 @@
 %% Setup %%
 
 addpath('functions'); % adiciona o caminho das nossas funcoes 
+format long
 
 %% Estudo dos diferentes criterios %%
 
